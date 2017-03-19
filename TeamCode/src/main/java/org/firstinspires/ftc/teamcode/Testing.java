@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.Controller;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcontroller.internal.GPSTracker;
 import org.firstinspires.ftc.robotcontroller.internal.MyActivity;
@@ -22,6 +24,7 @@ public class Testing extends LinearOpMode {
     public void runOpMode() {
 
         VuforiaWrapper.init(hardwareMap.appContext);
+        Controller.readControllerParameters(hardwareMap.appContext);
 
         // create class object
         sendLocation();

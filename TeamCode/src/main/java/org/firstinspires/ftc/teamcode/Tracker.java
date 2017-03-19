@@ -78,7 +78,7 @@ class Tracker {
         public void run() {
             while(!Thread.interrupted()) {
 
-                if(lastListener != null && lastListener.isVisible()) {
+                if(lastListener != null && lastListener.getPose() != null) {
                     processPose(lastListener.getPose());
                 }
                 else {

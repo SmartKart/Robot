@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcontroller.internal.Controller;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 /**
  * Created by James on 2017-03-18.
@@ -35,15 +35,15 @@ public class Robot extends Hardware {
         /*if(Math.abs(angular) < 0.05)
             angular = 0;*/
 
-        angular = Robot.bound(angular, -0.5, 0.5);
+        angular = Robot.bound(angular, -0.15, 0.15);
 
         //Set basespeed to correct z
         double base = (Math.abs(z / Controller.TARGET_Z) - 1) * Controller.P_Z;
 
-        /*if(Math.abs(base) < 0.05)
+        /*if(base < 0.05)
             base = 0;*/
 
-        base = Robot.bound(base, -0.5, 0.5);
+        base = Robot.bound(base, -0.1, 0.2);
 
         return new double[] { base, angular };
     }

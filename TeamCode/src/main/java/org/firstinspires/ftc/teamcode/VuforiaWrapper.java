@@ -24,10 +24,11 @@ final class VuforiaWrapper {
         params.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
         params.vuforiaLicenseKey = ctx.getResources().getString(R.string.vuforia_license_key);
 
-        mInstance = ClassFactory.createVuforiaLocalizer(params);
+        mInstance = new VuforiaLocalizerImpl2(params);
 
         Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
 
         Tracker.init();
+        FrameExtractor.init();
     }
 }

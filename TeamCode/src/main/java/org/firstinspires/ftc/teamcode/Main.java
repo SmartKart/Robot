@@ -5,9 +5,13 @@ import android.widget.Toast;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcontroller.internal.GPSTracker;
 import org.firstinspires.ftc.robotcontroller.internal.MyActivity;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by James on 2017-03-18.
@@ -16,15 +20,18 @@ import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 @Autonomous(name="Main", group="main")
 public class Main extends LinearOpMode {
 
-    private GPSTracker gps;
-
     @Override
     public void runOpMode() {
         Robot robot = new Robot(hardwareMap);
 
-        // create class object
-        gps = new GPSTracker(hardwareMap.appContext);
-        sendLocation();
+        DialogUtil.buildConfigDialog(hardwareMap.appContext);
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate( new TimerTask() {
+            public void run() {
+                sendLocation();
+            }
+        }, 0, 5000);
 
         waitForStart();
 
@@ -48,9 +55,12 @@ public class Main extends LinearOpMode {
         }
 
         Tracker.close();
+        timer.cancel();
     }
 
     private void sendLocation() {
+        MyActivity activity = (MyActivity) hardwareMap.appContext;
+        GPSTracker gps = activity.gps;
 
         // check if GPS enabled
         if(gps.canGetLocation()){
@@ -58,12 +68,24 @@ public class Main extends LinearOpMode {
             double latitude = gps.getLatitude();
             double longitude = gps.getLongitude();
 
+            activity.updateLocation(latitude, longitude);
+
             // \n is for new line
-            Toast.makeText(hardwareMap.appContext, "Your Location is - \nLat: "
-                    + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            //makeToast("Your Location is - \nLat: " + latitude + "\nLong: " + longitude);
         }
         else {
-            Toast.makeText(hardwareMap.appContext, "Can't get location!", Toast.LENGTH_LONG).show();
+            //makeToast("Can't get location!");
         }
+    }
+
+    private void makeToast(final String text) {
+        final FtcRobotControllerActivity activity = (FtcRobotControllerActivity) hardwareMap.appContext;
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
