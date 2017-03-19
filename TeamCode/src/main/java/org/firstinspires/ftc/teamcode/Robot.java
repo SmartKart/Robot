@@ -11,28 +11,44 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 public class Robot extends Hardware {
 
-
-
     Robot(HardwareMap hw) {
         super(hw);
 
         VuforiaWrapper.init(hw.appContext);
     }
 
-    static double[] poseToPower(VectorF pose) {
-        double left = 0;
-        double right = 0;
+    void setError(VectorF error) {
+        double[] speeds = poseToSpeed(error);
 
+        setBaseSpeed(speeds[0]);
+        setAngularSpeed(speeds[1]);
+        setPower();
+    }
+
+    static double[] poseToSpeed(VectorF pose) {
+        //Set angular to correct x
         float x = pose.get(0);
         float z = pose.get(2);
 
-        left = Math.signum(x) * (Math.abs(x) / Math.abs(z) * 0.3);
+        double angular = Math.signum(x) * (Math.abs(x) / Math.abs(z) * Controller.P_A);
 
-        if(Math.abs(left) < 0.05)
-            left = 0;
+        /*if(Math.abs(angular) < 0.05)
+            angular = 0;*/
 
-        left = bound(left, -1, 1);
+        angular = Robot.bound(angular, -0.5, 0.5);
 
-        return new double[] {left, -left};
+        //Set basespeed to correct z
+        double base = (Math.abs(z / Controller.TARGET_Z) - 1) * Controller.P_Z;
+
+        /*if(Math.abs(base) < 0.05)
+            base = 0;*/
+
+        base = Robot.bound(base, -0.5, 0.5);
+
+        return new double[] { base, angular };
+    }
+
+    static double[] speedToPower(double[] speeds) {
+        return new double[] { speeds[0] + speeds[1], speeds[0] - speeds[1] };
     }
 }

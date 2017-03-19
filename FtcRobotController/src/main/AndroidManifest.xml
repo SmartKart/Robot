@@ -5,6 +5,9 @@
           android:versionCode="15"
           android:versionName="2.4">
 
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name = "android.permission.INTERNET" />
+
   <application
     android:allowBackup="true"
     android:largeHeap="true"
@@ -13,7 +16,7 @@
     android:theme="@style/AppTheme" >
 
     <activity
-      android:name="org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity"
+      android:name="org.firstinspires.ftc.robotcontroller.internal.MyActivity"
       android:configChanges="orientation|screenSize"
       android:label="@string/app_name"
       android:launchMode="singleTask" >
@@ -30,6 +33,7 @@
       <meta-data
         android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
         android:resource="@xml/device_filter" />
+
     </activity>
 
     <service

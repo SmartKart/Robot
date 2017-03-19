@@ -10,8 +10,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Hardware {
 
-    protected DcMotor leftMotor;
-    protected DcMotor rightMotor;
+    DcMotor leftMotor;
+    DcMotor rightMotor;
+
+    protected double baseSpeed = 0;
+    protected double angularSpeed = 0;
 
     Hardware(HardwareMap hwMap) {
         leftMotor = (DcMotor) hwMap.get("left");
@@ -23,12 +26,27 @@ public class Hardware {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    //Use baseSpeed and angular speed
+    void setPower() {
+        double lPower = baseSpeed + angularSpeed;
+        double rPower = baseSpeed - angularSpeed;
+
+        setPower(lPower, rPower);
+    }
     void setPower(double lpower, double rpower) {
 
         setMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         leftMotor.setPower(bound(lpower, -1, 1));
         rightMotor.setPower(bound(rpower, -1, 1));
+    }
+
+    void setBaseSpeed(double speed) {
+        baseSpeed = speed;
+    }
+
+    void setAngularSpeed(double angular) {
+        angularSpeed = angular;
     }
 
     void stop() {
