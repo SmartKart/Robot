@@ -35,7 +35,7 @@ public class Robot extends Hardware {
         /*if(Math.abs(angular) < 0.05)
             angular = 0;*/
 
-        angular = Robot.bound(angular, -0.15, 0.15);
+        angular = Robot.bound(angular, -0.05, 0.05);
 
         //Set basespeed to correct z
         double base = (Math.abs(z / Controller.TARGET_Z) - 1) * Controller.P_Z;
@@ -43,7 +43,7 @@ public class Robot extends Hardware {
         /*if(base < 0.05)
             base = 0;*/
 
-        base = Robot.bound(base, -0.1, 0.2);
+        base = Robot.bound(base, -0.05, 0.1);
 
         return new double[] { base, angular };
     }

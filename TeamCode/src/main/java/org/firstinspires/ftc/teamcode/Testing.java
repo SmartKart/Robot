@@ -24,7 +24,7 @@ public class Testing extends LinearOpMode {
     public void runOpMode() {
 
         VuforiaWrapper.init(hardwareMap.appContext);
-        Controller.readControllerParameters(hardwareMap.appContext);
+        DialogUtil.buildConfigDialog(hardwareMap.appContext);
 
         // create class object
         sendLocation();

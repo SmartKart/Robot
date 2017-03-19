@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.Controller;
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.robotcontroller.internal.GPSTracker;
 import org.firstinspires.ftc.robotcontroller.internal.MyActivity;
@@ -24,7 +25,7 @@ public class Main extends LinearOpMode {
     public void runOpMode() {
         Robot robot = new Robot(hardwareMap);
 
-        DialogUtil.buildConfigDialog(hardwareMap.appContext);
+        Controller.readControllerParameters(hardwareMap.appContext);
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate( new TimerTask() {
