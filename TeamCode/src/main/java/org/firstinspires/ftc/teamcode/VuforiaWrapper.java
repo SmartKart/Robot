@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import android.content.Context;
 
+import com.vuforia.HINT;
+import com.vuforia.Vuforia;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
@@ -23,8 +26,8 @@ final class VuforiaWrapper {
 
         mInstance = ClassFactory.createVuforiaLocalizer(params);
 
-        VuforiaTrackables markers = mInstance.loadTrackablesFromAsset("FTC_2016-17");
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
 
-        markers.activate();
+        Tracker.init();
     }
 }

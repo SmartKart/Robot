@@ -17,20 +17,31 @@ public class Hardware {
         leftMotor = (DcMotor) hwMap.get("left");
         rightMotor = (DcMotor) hwMap.get("right");
 
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     void setPower(double lpower, double rpower) {
+
+        setMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         leftMotor.setPower(bound(lpower, -1, 1));
         rightMotor.setPower(bound(rpower, -1, 1));
     }
 
     void stop() {
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    private void setMotorMode(DcMotor.RunMode targetMode) {
+        if(leftMotor.getMode() != targetMode)
+            leftMotor.setMode(targetMode);
+
+        if(rightMotor.getMode() != targetMode)
+            rightMotor.setMode(targetMode);
     }
 
     private double bound(double value, double lower, double upper) {
