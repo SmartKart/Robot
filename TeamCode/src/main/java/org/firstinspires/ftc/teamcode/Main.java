@@ -23,8 +23,11 @@ public class Main extends LinearOpMode {
         while(opModeIsActive()) {
             VectorF pose = Tracker.getPose();
 
-            if(pose == null)
+            if(pose == null) {
+                stop();
                 continue;
+            }
+
 
             double[] powers = Robot.poseToPower(pose);
             robot.setPower(powers[0], powers[1]);

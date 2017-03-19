@@ -32,8 +32,7 @@ public class Hardware {
     }
 
     void stop() {
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     private void setMotorMode(DcMotor.RunMode targetMode) {
@@ -44,7 +43,7 @@ public class Hardware {
             rightMotor.setMode(targetMode);
     }
 
-    private double bound(double value, double lower, double upper) {
+    static double bound(double value, double lower, double upper) {
         if(value < lower)
             return lower;
         else if (value > upper)

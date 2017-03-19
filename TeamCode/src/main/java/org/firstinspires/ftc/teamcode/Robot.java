@@ -11,6 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 public class Robot extends Hardware {
 
+
+
     Robot(HardwareMap hw) {
         super(hw);
 
@@ -28,6 +30,8 @@ public class Robot extends Hardware {
 
         if(Math.abs(left) < 0.05)
             left = 0;
+
+        left = bound(left, -1, 1);
 
         return new double[] {left, -left};
     }
